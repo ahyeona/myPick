@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import Nav from "./Nav";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
+import Logo from "./Logo";
 
 
-export  { Button, Input, Modal, Nav, SearchBar, ThemeToggle }
+export  { Button, Input, Modal, Nav, SearchBar, ThemeToggle, Logo }

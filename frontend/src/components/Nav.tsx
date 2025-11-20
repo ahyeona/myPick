@@ -1,8 +1,22 @@
-import React from 'react'
+import type { ReactNode } from 'react'
+import styled from 'styled-components'
+import Logo from './Logo'
 
-const Nav = () => {
+const NavStyle = styled.div`
+  width: 100vw;
+  height: 3rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: ${({theme}) => theme.navBg};
+`
+
+const Nav = ({children} : {children : ReactNode}) => {
   return (
-    <div>Nav</div>
+    <NavStyle>
+      <Logo />
+      {children}
+    </NavStyle>
   )
 }
 
