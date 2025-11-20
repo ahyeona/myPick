@@ -1,9 +1,18 @@
-import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Login, Main, Mypick, Signup } from '../pages';
 
-function index() {
+
+const Router = () => {
   return (
-    <div>index</div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Main />}/>
+        <Route path='/mypick' element={<Mypick />}/>
+        <Route path='/signup' element={<Signup />}/>
+        <Route path='/login' element={<Login />}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
-export default index
+export default Router
