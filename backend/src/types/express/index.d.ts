@@ -1,7 +1,5 @@
-import "express";
+import { Request as ExpressRequest } from "express";
 
-declare module "express-serve-static-core" {
-  interface Request {
-    user?: number;
-  }
+export interface RequestWithUser extends ExpressRequest {
+  user?: number;
 }

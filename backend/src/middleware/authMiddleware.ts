@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from "express"
+import { Response, NextFunction } from "express"
 import jwt from "jsonwebtoken"
+import { RequestWithUser } from "../types/express";
 
-export const authMiddleware = (req : Request, res : Response, next : NextFunction) => {
+export const authMiddleware = (req : RequestWithUser, res : Response, next : NextFunction) => {
     try {
         const header = req.headers.authorization;
         
@@ -15,7 +16,6 @@ export const authMiddleware = (req : Request, res : Response, next : NextFunctio
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_KEY as string) as { id: number };
             req.user = decoded.id;
             next();
-
         } catch (error) {
             return res.status(403).json({ message: "Access Token이 만료되었습니다." });
         }

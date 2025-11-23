@@ -23,19 +23,19 @@ export const loginService = async (email: string, password : string) => {
     const accessToken = generateAccessToken(user.id);
     const refreshToken = generateRefreshToken(user.id);
 
-    await Token.upsert({ userId: user.id, refreshToken });
+    await Token.upsert({ user_id: user.id, refresh_token: refreshToken });
 
     return { user, accessToken, refreshToken };
 }
 
 export const refreshAccessToken = async (refreshToken: string) => {
   const decoded = verifyRefreshToken(refreshToken);
-  const userId = decoded.id;
+  const user_id = decoded.id;
 
-  const token = await Token.findOne({ where: { userId } });
+  const token = await Token.findOne({ where: { user_id } });
   if (!token || token.refresh_token !== refreshToken)
     throw new Error("Refresh Token이 유효하지 않습니다.");
 
-  const newAccessToken = generateAccessToken(userId);
+  const newAccessToken = generateAccessToken(user_id);
   return newAccessToken;
 };
