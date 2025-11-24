@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components'
 
 const InputStyle = styled.input`
@@ -6,6 +7,7 @@ const InputStyle = styled.input`
   border: 0;
   border-radius: 6px;
   padding: 10px;
+  display: block;
   background-color: ${({theme})=> theme.navBg};
   color: ${({theme})=> theme.buttonText};
   &:focus {
@@ -14,13 +16,15 @@ const InputStyle = styled.input`
 `
 
 type InputProps = {
-  onChange?: () => void;
+  onChange: Dispatch<SetStateAction<string>>;
   placeholder?: string;
 }
 
 const Input = ({onChange, placeholder}:InputProps) => {
   return (
-    <InputStyle placeholder={placeholder} />  
+    <InputStyle
+      onChange={(e)=>{onChange(e.target.value)}} 
+      placeholder={placeholder} />  
   )
 }
 

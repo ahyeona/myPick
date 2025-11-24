@@ -15,7 +15,13 @@ export const loginController = async (req : Request, res : Response) => {
     try {
         const { email, password } = req.body;
         const data = await loginService(email, password);
-        res.status(200).json({ message: "로그인 성공", ...data });
+        res.cookie("refreshToken", data.refreshToken, {
+            httpOnly: true,
+            // secure: true,    // https 환경에서만 전송
+            sameSite: "strict",
+            path: "/",
+        });
+        res.status(200).json({ message: "로그인 성공", user : data.user, accessToken : data.accessToken });
     } catch (error) {
         res.status(400).json({ message: error });
     }

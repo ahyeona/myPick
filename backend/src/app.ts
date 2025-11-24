@@ -1,11 +1,14 @@
 import express, { Response } from "express";
+import cors from "cors";
 import { router } from "./routes";
 import { authMiddleware } from "./middleware/authMiddleware";
 import { RequestWithUser } from "./types/express";
 import { sequelize } from "./models";
+import { corsOptions } from "./config/cors";
 
 const app = express();
 
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/", router)
 app.get("/profile", authMiddleware, (req : RequestWithUser, res : Response) => {

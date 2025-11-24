@@ -1,8 +1,46 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Button, Input } from '../components'
+import { useEffect, useState } from 'react';
+import { loginApi } from '../services/authApi';
+import { useAuthStore } from '../store/authStore';
 
 const Login = () => {
+  const { setAuth } = useAuthStore();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const nav = useNavigate(); 
+
+  const login = async () => {
+    // ----------if 조건 수정필요---------
+    if (!email || !password) alert("빈칸, 정규식 확인하세요.");
+
+    try {
+      const { data } = await loginApi({ email, password });
+      console.log(data)
+      setAuth(data.user, data.accessToken);
+      nav("/");
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const gotoSignup = () => {
+    nav("/signup");
+  }
+
+  useEffect(()=>{
+    console.log(email);
+    console.log(password);
+  }, [email, password])
+
   return (
-    <div>Login</div>
+    <div style={{"textAlign":"center"}}>
+      <Input placeholder='Email' onChange={setEmail}/>
+      <Input placeholder='Password' onChange={setPassword} />
+      <Button text='로그인' onClick={login} />
+      <Button text='회원가입' onClick={gotoSignup} />
+    </div>
   )
 }
 
