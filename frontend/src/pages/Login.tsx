@@ -20,8 +20,9 @@ const Login = () => {
       console.log(data)
       setAuth(data.user, data.accessToken);
       nav("/");
-    } catch (error) {
-      console.log(error)
+    } catch (error : any) {
+        console.log(error)
+        alert(error.response.data.message);
     }
   }
 
@@ -29,15 +30,10 @@ const Login = () => {
     nav("/signup");
   }
 
-  useEffect(()=>{
-    console.log(email);
-    console.log(password);
-  }, [email, password])
-
   return (
     <div style={{"textAlign":"center"}}>
       <Input placeholder='Email' onChange={setEmail}/>
-      <Input placeholder='Password' onChange={setPassword} />
+      <Input password={true} placeholder='Password' onChange={setPassword} />
       <Button text='로그인' onClick={login} />
       <Button text='회원가입' onClick={gotoSignup} />
     </div>

@@ -16,35 +16,35 @@ baseAxios.interceptors.request.use((config) => {
   return config;
 });
 
-baseAxios.interceptors.response.use(
-  (res) => res,
-  async (error) => {
-    console.log("baseAxios.interceptors.response");
+// baseAxios.interceptors.response.use(
+//   (res) => res,
+//   async (error) => {
+//     console.log("baseAxios.interceptors.response");
 
-    const originalRequest = error.config;
+//     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+//     if (error.response?.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
 
-      try {
-        const res = await axios.post(
-          `${baseURL}/auth/refresh`,
-          {},
-          { withCredentials: true }
-        );
+//       try {
+//         const res = await axios.post(
+//           `${baseURL}/auth/refresh`,
+//           {},
+//           { withCredentials: true }
+//         );
 
-        useAuthStore.getState().setAccessToken(res.data.accessToken);
-        originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
+//         useAuthStore.getState().setAccessToken(res.data.accessToken);
+//         originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
 
-        return axios(originalRequest);
-      } catch (err) {
-        useAuthStore.getState().clearAuth();
-        window.location.href = "/login";
-      }
-    }
+//         return axios(originalRequest);
+//       } catch (err) {
+//         useAuthStore.getState().clearAuth();
+//         window.location.href = "/login";
+//       }
+//     }
 
-    return Promise.reject(error);
-  }
-);
+//     return Promise.reject(error);
+//   }
+// );
 
 export { baseAxios }

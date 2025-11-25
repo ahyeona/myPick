@@ -22,23 +22,18 @@ const Signup = () => {
   
       try {
         const { data } = await signupApi({ email, password });
-        console.log(data)
+        console.log("signup 응답", data)
         alert("가입되었습니다.");
-      } catch (error) {
+      } catch (error : any) {
         console.log(error)
-        alert("오류입니다. 잠시 후 시도해주세요.");
+        alert(error.response.data.message);
       }
   }
-
-  useEffect(()=>{
-    console.log(email);
-    console.log(password);
-  }, [email, password])
 
   return (
     <div style={{"textAlign":"center"}}>
       <Input placeholder='Email' onChange={setEmail}/>
-      <Input placeholder='Password' onChange={setPassword} />
+      <Input password={true} placeholder='Password' onChange={setPassword} />
       <Button text='회원가입' onClick={signup} />
       <Button text='로그인' onClick={gotoLogin} />
     </div>

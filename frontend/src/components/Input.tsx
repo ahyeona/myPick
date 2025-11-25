@@ -18,13 +18,16 @@ const InputStyle = styled.input`
 type InputProps = {
   onChange: Dispatch<SetStateAction<string>>;
   placeholder?: string;
+  password?: boolean;
 }
 
-const Input = ({onChange, placeholder}:InputProps) => {
+const Input = ({onChange, placeholder, password}:InputProps) => {
   return (
     <InputStyle
       onChange={(e)=>{onChange(e.target.value)}} 
-      placeholder={placeholder} />  
+      placeholder={placeholder}
+      type={password ? 'password' : 'text'}
+      />  
   )
 }
 
