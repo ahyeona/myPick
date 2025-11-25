@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getMovieList } from "./movieService";
 
 export const searchService = async (keyword: string) => {
     const url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&include_adult=false&language=ko&page=1`;
@@ -8,7 +9,8 @@ export const searchService = async (keyword: string) => {
             Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`
         }
     });
-    return data;
+    const list = getMovieList(data.results);
+    return list;
 }
 
 export const popularSearchService = async () => {
@@ -19,7 +21,8 @@ export const popularSearchService = async () => {
             Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`
         }
     });
-    return data;
+    const list = getMovieList(data.results);
+    return list;
 }
 
 // 장르별영화
@@ -33,7 +36,8 @@ export const genreSearchService = async (genres: string) => {
             Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`
         }
     });
-    return data;
+    const list = getMovieList(data.results);
+    return list;
 }
 
 // 장르 리스트

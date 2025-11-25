@@ -1,4 +1,4 @@
 export const imageConfig = {
-  baseURL: "",
+  baseUrl: "",
   size: "",
 };

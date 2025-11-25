@@ -18,6 +18,6 @@ export const syncGenreService = async () => {
 export const syncImgConfigService = async () => {
     const data = await imgConfigService();
 
-    imageConfig.baseURL = data.images.secure_base_url;
+    imageConfig.baseUrl = data.images.secure_base_url;
     imageConfig.size = data.images.poster_sizes[3];
 };
