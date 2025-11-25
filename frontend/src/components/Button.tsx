@@ -2,8 +2,6 @@ import styled from 'styled-components'
 
 const ButtonStyle = styled.div`
   background-color: ${({theme}) => theme.buttonBg};
-  width: 300px;
-  height: 40px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -17,11 +15,15 @@ const ButtonStyle = styled.div`
 type ButtonProps = {
   text?: string;
   onClick?: () => void;
+  width?: string;
+  height?: string;
 };
 
-const Button = ({text, onClick} : ButtonProps) => {
+const Button = ({text, onClick, width="300px", height="40px"} : ButtonProps) => {
   return (
-    <ButtonStyle onClick={onClick}>{text}</ButtonStyle>
+    <ButtonStyle 
+    style={{"width" : width, "height" : height }}
+    onClick={onClick}>{text}</ButtonStyle>
   )
 }
 

@@ -26,11 +26,11 @@ const Nav = ({children} : {children? : ReactNode}) => {
       <SearchBar onChange={()=>{}}/>
       <ThemeToggle />
       { user ? 
-        <Button text='logout' onClick={()=>{ clearAuth() }} />
+        <Button text='logout' width='100px' onClick={()=>{ clearAuth() }} />
          : 
-        <Button text='login' onClick={()=>{nav("/login")}} />
+        <Button text='login' width='100px' onClick={()=>{nav("/login")}} />
       }
-      <Button text='mypick' onClick={()=>{nav("/mypick")}} />
+      <Button text='mypick' width='100px' onClick={()=>{nav("/mypick")}} />
       
       {/* {children} */}
     </NavStyle>

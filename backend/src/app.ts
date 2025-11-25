@@ -1,9 +1,10 @@
-import express, { Response } from "express";
+import express from "express";
 import cors from "cors";
 import { router } from "./routes";
 import { sequelize } from "./models";
 import { corsOptions } from "./config/cors";
 import cookieParser from "cookie-parser";
+import { syncGenreService, syncImgConfigService } from "./services/syncService";
 
 const app = express();
 
@@ -20,8 +21,10 @@ sequelize.sync().then(() => {
   console.error('데이터베이스 동기화 실패:', err);
 });
 
-app.listen(PORT, () => {
-    console.log("server running");
-});
+(async () => {
+  await syncGenreService();
+  await syncImgConfigService();
+  app.listen(PORT, () => console.log(`Server running…`));
+})();
 
 export default app;
