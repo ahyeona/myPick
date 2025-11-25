@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getMovieList } from "./movieService";
+import { imageConfig } from "../config/img";
 
 export const searchService = async (keyword: string) => {
     const url = `https://api.themoviedb.org/3/search/movie?query=${keyword}&include_adult=false&language=ko&page=1`;
@@ -63,3 +64,15 @@ export const imgConfigService = async () => {
     return data;
 }
 
+export const detailService = async (id: string) => {
+    const url = `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`;
+    const { data } = await axios.get(url, {
+        headers : {
+            Accept: 'application/json',
+            Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`
+        }
+    });
+    data.imgUrl = data.poster_path ? imageConfig.baseUrl + imageConfig.size + data.poster_path : "";
+    
+    return data;
+}

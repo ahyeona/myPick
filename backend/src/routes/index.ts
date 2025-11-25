@@ -7,4 +7,4 @@ export const router = Router();
 
 router.use("/auth", authRouter);
 router.use("/search", searchRouter);
-router.get("/genre", genreListController);
+router.get("/genres", genreListController);
