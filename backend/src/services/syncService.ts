@@ -4,8 +4,10 @@ import { genreListService, imgConfigService } from "./searchService"
 
 export const syncGenreService = async () => {
     const { genres } = await genreListService();
-
+    
+    // SET FOREIGN_KEY_CHECKS = 0;
     await Genre.destroy({ truncate: true });
+    // SET FOREIGN_KEY_CHECKS = 1;
 
     for (const genre of genres) {
         await Genre.create({

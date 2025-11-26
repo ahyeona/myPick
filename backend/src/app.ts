@@ -22,7 +22,7 @@ sequelize.sync().then(() => {
 });
 
 (async () => {
-  await syncGenreService();
+  // await syncGenreService();
   await syncImgConfigService();
   app.listen(PORT, () => console.log(`Server running…`));
 })();
