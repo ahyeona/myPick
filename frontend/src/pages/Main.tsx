@@ -11,25 +11,35 @@ const Main = () => {
   const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);
   const [genreMovies, setGenreMovies] = useState<MovieType[]>([]);
 
-  const getPopularMovies = async () => {
-    const { data } = await popularApi();
-    setPopularMovies(data.data);
-    console.log("data", data);  
-  }
+  // popular : 인기 영화, keyword : 검색 결과, genre : 장르 검색결과
+  const [mode, setMode] = useState<"popular" | "keyword" | "genre">("popular");
+  const [loading, setLoading] = useState(false);
 
-  // searchbar에서 엔터 치거나 돋보기버튼 눌렀을때
+  const getPopularMovies = async () => {
+      setLoading(true);
+      const { data } = await popularApi();
+      setPopularMovies(data.data);
+      setMode("popular");
+      setLoading(false);
+    };
+
   const getKeywordMovies = async () => {
+    if (!keyword.trim()) return;
+    setLoading(true);
     const { data } = await keywordApi(keyword);
     setKeywordMovies(data.data);
-    console.log("data", data);  
-  }
+    setMode("keyword");
+    setLoading(false);
+  };
 
   const getGenreMovies = async () => {
     if (!genre.id) return;
+    setLoading(true);
     const { data } = await genreMovieApi(genre.id);
     setGenreMovies(data.data);
-    console.log("data", data);  
-  }
+    setMode("genre");
+    setLoading(false);
+  };
 
   const getGenres = async () => {
     const { data } = await genreApi();
@@ -50,11 +60,22 @@ const Main = () => {
 
   return (
     <>
-      <SearchBar onChange={setKeyword} search={()=>{getKeywordMovies()}}/>
+      <SearchBar onChange={setKeyword} search={getKeywordMovies}/>
       <GenreList genres={genreList} setGenre={setGenre} />
-      <MovieList caption={"인기 영화 목록"} movies={popularMovies} />
-      <MovieList caption={`${keyword} 검색 결과`} movies={keywordMovies} />
-      <MovieList caption={`${genre.name} 영화 목록`} movies={genreMovies} />
+
+      {loading && <Loading />}
+
+      {!loading && mode === "popular" && (
+        <MovieList caption="인기 영화 목록" movies={popularMovies} />
+      )}
+
+      {!loading && mode === "keyword" && (
+        <MovieList caption={`${keyword} 검색 결과`} movies={keywordMovies} />
+      )}
+
+      {!loading && mode === "genre" && (
+        <MovieList caption={`${genre.name} 영화 목록`} movies={genreMovies} />
+      )}
     </>
   )
 }
