@@ -15,6 +15,7 @@ export const authMiddleware = (req : RequestWithUser, res : Response, next : Nex
         try {
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_KEY as string) as { id: number };
             req.user = decoded.id;
+            console.log("authmiddleware", decoded.id);
             next();
         } catch (error) {
             return res.status(403).json({ message: "Access Token이 만료되었습니다." });

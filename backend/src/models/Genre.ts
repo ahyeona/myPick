@@ -3,7 +3,7 @@ import { DataTypes, Model, Sequelize } from "sequelize";
 class Genre extends Model {
     public id!: number;
     public name!: string;
-
+    
     static initModel(sequelize : Sequelize) {
         Genre.init(
             {

@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { mypickCreateService, mypickDeleteService, mypickListService, mypickUpdateService } from "../services/mypickService";
 import { RequestWithUser } from "../types/express";
+import { CreateMypickDTO } from "../dtos/mypick.dto";
 
 export const mypickListController = async (req : RequestWithUser, res : Response) => {
     try {
@@ -17,8 +18,23 @@ export const mypickListController = async (req : RequestWithUser, res : Response
 export const mypickCreateController = async (req : RequestWithUser, res : Response) => {
     try {
         const user_id = req.user as number;
-        const { movie_id, genre_ids, is_watched, memo } = req.body;
-        const result = await mypickCreateService(user_id, movie_id, genre_ids, is_watched, memo);
+        const dto: CreateMypickDTO = {
+            user_id,
+            movie: {
+                id: req.body.movie_id,
+                title: req.body.title,
+                poster_path: req.body.poster_path,
+                overview: req.body.overview,
+                release_date: req.body.release_date,
+                genre_ids: req.body.genre_ids,
+            },
+            is_watched: req.body.is_watched,
+            memo: req.body.memo,
+        };
+
+        // const { movie_id, genre_ids, is_watched, memo, title, poster_path, overview, release_date } = req.body;
+        // const result = await mypickCreateService(user_id, movie_id, genre_ids, is_watched, memo, title, poster_path, overview, release_date);
+        const result = await mypickCreateService(dto);
 
         res.status(200).json({ result });
     } catch (error : any) {

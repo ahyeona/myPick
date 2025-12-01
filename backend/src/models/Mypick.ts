@@ -1,4 +1,5 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
+import Movie from "./Movie";
 
 class Mypick extends Model {
     public id!: number;
@@ -6,6 +7,8 @@ class Mypick extends Model {
     public movie_id!: number;
     public is_watched!: boolean;
     public memo!: string;
+
+    public Movie!: Movie;
 
     static initModel(sequelize : Sequelize) {
         Mypick.init(
