@@ -3,6 +3,7 @@ import type { MovieType, MypickType } from "../types";
 import { addMypickApi, deleteMypickApi, getMypicDetailkApi, updateMypickApi } from "../services/mypickApi";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
+import AuthRoute from "../router/AuthRoute";
 
 const Overlay = styled.div`
   position: fixed;
@@ -22,6 +23,7 @@ const ModalContainer = styled.div`
   height: fit-content;
   border-radius: 20px;
   position: absolute;
+  z-index: 100;
 
   & img {
     width: 200px;
@@ -54,6 +56,7 @@ const MovieModal = ({movie, onClose}: MovieModalProps) => {
   const addMypick = async () => {
     const { data } = await addMypickApi({movie, is_watched : isWatched, memo});
     console.log(data);
+    
     // onClose();
   }
 
@@ -66,18 +69,24 @@ const MovieModal = ({movie, onClose}: MovieModalProps) => {
 
   const deleteMypick = async () => {
     if (!mypickDetail?.mypick.id) return;
-    const { data } = await deleteMypickApi(mypickDetail.mypick.id);
-    console.log(data);
+    const props = {
+      mypick_id : mypickDetail.mypick.id
+    }
+    const { data } = await deleteMypickApi(props);
+    console.log(data?.data);
     // onClose();
   }
 
   const getMypickDetail = async () => {
     if (!movie.id) return;
+    const props = {
+      movie_id : movie.id
+    }
     setLoading(true);
-    const { data } = await getMypicDetailkApi(movie.id);
+    const { data } = await getMypicDetailkApi(props);
     setLoading(false);
-    console.log(data);
-    if (data) setMypickDetail(data);
+    console.log(data?.data);
+    if (data?.data) setMypickDetail(data?.data);
   }
 
   useEffect(()=> {
@@ -85,37 +94,41 @@ const MovieModal = ({movie, onClose}: MovieModalProps) => {
   }, []);
 
   return (
-    <Overlay onClick={onClose}>
+    <Overlay>
       <ModalContainer>
-        {loading && <Loading />}
-        
-        <CloseBtn onClick={onClose}>X</CloseBtn>
-        {movie.title}
-        <img src={movie.imgUrl} />
-        <div>{movie.genres?.map((genre)=>{return <span>{genre}</span>})}</div>
-        <p>{movie.overview}</p>
-        <span>{movie.release_date}</span>
-        
-        {
-          mypickDetail?.isMypick ?
-            <>
-              <label><input type="checkbox" defaultChecked={mypickDetail.mypick.is_watched} onChange={(e)=>{setIsWatched(e.target.checked)}}/>시청여부</label>
-              <textarea onChange={(e)=>{setMemo(e.target.value)}}>{mypickDetail.mypick.memo}</textarea>
-              <div onClick={updateMypick}>수정</div>
-              <div onClick={deleteMypick}>삭제</div>
-            </>
-          :
-          <div onClick={()=>{setAddMode(true)}}>mypick 추가</div>
-        }
-        {
-          addMode && (
-            <>
-              <label><input type="checkbox" onChange={(e)=>{setIsWatched(e.target.checked)}}/>시청여부</label>
-              <textarea onChange={(e)=>{setMemo(e.target.value)}}>메모</textarea>
-              <div onClick={addMypick}>저장</div>
-            </>
-          )
-        }
+        <AuthRoute>
+          <>
+            {loading && <Loading />}
+            
+            <CloseBtn onClick={onClose}>X</CloseBtn>
+            {movie.title}
+            <img src={movie.imgUrl} />
+            <div>{movie.genres?.map((genre)=>{return <span>{genre}</span>})}</div>
+            <p>{movie.overview}</p>
+            <span>{movie.release_date}</span>
+            
+            {
+              mypickDetail?.isMypick ?
+                <>
+                  <label><input type="checkbox" defaultChecked={mypickDetail.mypick.is_watched} onChange={(e)=>{setIsWatched(e.target.checked)}}/>시청여부</label>
+                  <textarea onChange={(e)=>{setMemo(e.target.value)}}>{mypickDetail.mypick.memo}</textarea>
+                  <div onClick={updateMypick}>수정</div>
+                  <div onClick={deleteMypick}>삭제</div>
+                </>
+              :
+              <div onClick={()=>{setAddMode(true)}}>mypick 추가</div>
+            }
+            {
+              addMode && (
+                <>
+                  <label><input type="checkbox" onChange={(e)=>{setIsWatched(e.target.checked)}}/>시청여부</label>
+                  <textarea placeholder="메모" onChange={(e)=>{setMemo(e.target.value)}}></textarea>
+                  <div onClick={addMypick}>저장</div>
+                </>
+              )
+            }
+          </>  
+        </AuthRoute>
       </ModalContainer>
     </Overlay>
   )

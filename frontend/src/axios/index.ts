@@ -16,6 +16,16 @@ baseAxios.interceptors.request.use((config) => {
   return config;
 });
 
+
+baseAxios.interceptors.response.use((res) => res, async (error) => {
+  console.log("error", error);
+
+  if (error.response?.status === 401) {
+    alert("로그인이 필요합니다.");
+  }
+});
+
+
 // baseAxios.interceptors.response.use(
 //   (res) => res,
 //   async (error) => {

@@ -44,7 +44,7 @@ const MovieList = ({movies, caption} : {movies : MovieType[], caption : string})
 
             {
                 selectedMovie && (
-                    <MovieModal movie={selectedMovie} onClose={()=> setSelectedMovie(null)} />
+                    <MovieModal movie={selectedMovie} onClose={()=> {setSelectedMovie(null)}} />
                 )
             }
         </>

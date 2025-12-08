@@ -7,9 +7,16 @@ interface MypickProps {
     memo:string;
 }
 
+interface MypickDetailProps{
+    movie_id: number;
+}
+
+interface MypickDeleteProps {
+    mypick_id: number;
+}
 
 export const getMypickApi = () => baseAxios.get("/mypick/list");
-export const getMypicDetailkApi = (movie_id:number) => baseAxios.post("/mypick/detail", movie_id);
+export const getMypicDetailkApi = (data:MypickDetailProps) => baseAxios.post("/mypick/detail", data);
 export const addMypickApi = (data : MypickType) => baseAxios.post(`/mypick/create`, data);
 export const updateMypickApi = (data : MypickProps) => baseAxios.post(`/mypick/update`, data);
-export const deleteMypickApi = (mypick_id : number) => baseAxios.post("/mypick/delete", mypick_id);
+export const deleteMypickApi = (data : MypickDeleteProps) => baseAxios.post("/mypick/delete", data);

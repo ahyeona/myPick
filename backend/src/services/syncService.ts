@@ -1,13 +1,17 @@
 import { imageConfig } from "../config/img";
-import { Genre } from "../models";
+import { Genre, sequelize } from "../models";
 import { genreListService, imgConfigService } from "./searchService"
 
 export const syncGenreService = async () => {
     const { genres } = await genreListService();
-    
-    // SET FOREIGN_KEY_CHECKS = 0;
-    await Genre.destroy({ truncate: true });
-    // SET FOREIGN_KEY_CHECKS = 1;
+
+    // const [results] = await sequelize.query(`
+    //     SHOW TABLES LIKE 'genres';
+    // `);
+
+    // if (results.length != 0) {
+    //     await Genre.destroy({ truncate: true });
+    // }
 
     for (const genre of genres) {
         await Genre.create({

@@ -5,7 +5,7 @@ import type { MovieType, GenreType } from '../types'
 
 const Main = () => {
   const [keyword, setKeyword] = useState("");
-  const [genre, setGenre] = useState<GenreType>({ id:0 , name:"" });
+  const [genre, setGenre] = useState<GenreType>({ id: 0, name: "" });
   const [genreList, setGenreList] = useState([]);
   const [keywordMovies, setKeywordMovies] = useState<MovieType[]>([]);
   const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);
@@ -16,12 +16,12 @@ const Main = () => {
   const [loading, setLoading] = useState(false);
 
   const getPopularMovies = async () => {
-      setLoading(true);
-      const { data } = await popularApi();
-      setPopularMovies(data.data);
-      setMode("popular");
-      setLoading(false);
-    };
+    setLoading(true);
+    const { data } = await popularApi();
+    setPopularMovies(data.data);
+    setMode("popular");
+    setLoading(false);
+  };
 
   const getKeywordMovies = async () => {
     if (!keyword.trim()) return;
@@ -44,15 +44,15 @@ const Main = () => {
   const getGenres = async () => {
     const { data } = await genreApi();
     setGenreList(data.data.genres);
-    console.log("data", data.data.genres);  
+    console.log("data", data.data.genres);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getGenres();
     getPopularMovies();
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!genre.id) return;
     console.log("genre", genre);
     getGenreMovies();
@@ -60,7 +60,7 @@ const Main = () => {
 
   return (
     <>
-      <SearchBar onChange={setKeyword} search={getKeywordMovies}/>
+      <SearchBar onChange={setKeyword} search={getKeywordMovies} />
       <GenreList genres={genreList} setGenre={setGenre} />
 
       {loading && <Loading />}

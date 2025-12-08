@@ -18,6 +18,8 @@ const PORT = 8080;
 (async () => {
   await sequelize.query("SET FOREIGN_KEY_CHECKS = 0");
   await sequelize.sync({ force: true });
+  await syncGenreService();
+  await syncImgConfigService();
   await sequelize.query("SET FOREIGN_KEY_CHECKS = 1");
   console.log("데이터베이스 동기화 성공");
 })();
@@ -29,8 +31,6 @@ const PORT = 8080;
 //   });
 
 (async () => {
-  await syncGenreService();
-  await syncImgConfigService();
   app.listen(PORT, () => console.log(`Server running…`));
 })();
 
