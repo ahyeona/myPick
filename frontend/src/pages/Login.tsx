@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Button, Input } from '../components'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { loginApi } from '../services/authApi';
 import { useAuthStore } from '../store/authStore';
 
@@ -17,12 +17,10 @@ const Login = () => {
 
     try {
       const { data } = await loginApi({ email, password });
-      console.log(data)
       setAuth(data.user, data.accessToken);
       nav("/");
     } catch (error: any) {
-      console.log(error)
-      alert(error.response.data.message);
+      alert("로그인 실패");
     }
   }
 

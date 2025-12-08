@@ -1,35 +1,30 @@
+import { imageConfig } from "../config/img";
 import { CreateMypickDTO } from "../dtos/mypick.dto";
 import { Mypick, MovieGenre, Movie, Genre } from "../models";
 
 export const mypickListService = async (user_id: number) => {
-    console.log("mypickListService");
     const list = await Mypick.findAll({
         where: { user_id },
         include: [{
             model: Movie, include: [Genre]
         }]
     });
-    console.log("mypickListService list");
 
-    list.map(mypick => ({
-        id: mypick.id,
-        memo: mypick.memo,
-        is_watched: mypick.is_watched,
-        movie: {
-            // ...mypick.Movie,
-            id: mypick.Movie.id,
-            title: mypick.Movie.title,
-            poster_path: mypick.Movie.poster_path,
-            overview: mypick.Movie.overview,
-            release_date: mypick.Movie.release_date,
-            genres: mypick.Movie.Genres,
-            // adult: mypick.Movie.adult,
-            // original_language: mypick.Movie.original_language,
-            // original_title: mypick.Movie.original_title,
+    const result = list.map(item => {
+        const mypick = item.get({ plain: true });
+
+        return {
+            id: mypick.id,
+            memo: mypick.memo,
+            is_watched: mypick.is_watched,
+            movie: {
+                ...mypick.Movie,
+                imgUrl: mypick.Movie.poster_path ? imageConfig.baseUrl + imageConfig.size + mypick.Movie.poster_path : ""
+            }
         }
-    }));
+    });
 
-    return list;
+    return result;
 };
 
 export const mypickDetailService = async (user_id: number, movie_id: number) => {
@@ -50,7 +45,6 @@ export const mypickDetailService = async (user_id: number, movie_id: number) => 
 }
 
 
-// export const mypickCreateService = async (user_id : number, movie_id : number, genre_ids : number[], is_watched : boolean, memo : string, title:string, poster_path:string, overview:string, release_date : string) => {
 export const mypickCreateService = async (dto: CreateMypickDTO) => {
     const { user_id, movie, memo, is_watched } = dto;
     const movieExist = await Movie.findOne({ where: { id: movie.id } });

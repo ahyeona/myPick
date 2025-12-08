@@ -15,22 +15,23 @@ app.use("/", router)
 
 const PORT = 8080;
 
+// (async () => {
+//   await sequelize.query("SET FOREIGN_KEY_CHECKS = 0");
+//   await sequelize.sync({ force: true });
+//   await syncGenreService();
+//   await syncImgConfigService();
+//   await sequelize.query("SET FOREIGN_KEY_CHECKS = 1");
+//   console.log("데이터베이스 동기화 성공");
+// })();
+
+sequelize.sync({ force: false }).then(() => {
+  console.log('데이터베이스 동기화 성공');
+}).catch(err => {
+  console.error('데이터베이스 동기화 실패:', err);
+});
+
 (async () => {
-  await sequelize.query("SET FOREIGN_KEY_CHECKS = 0");
-  await sequelize.sync({ force: true });
-  await syncGenreService();
   await syncImgConfigService();
-  await sequelize.query("SET FOREIGN_KEY_CHECKS = 1");
-  console.log("데이터베이스 동기화 성공");
-})();
-
-// sequelize.sync({ force : false }).then(() => {
-//     console.log('데이터베이스 동기화 성공');
-//   }).catch(err => {
-//     console.error('데이터베이스 동기화 실패:', err);
-//   });
-
-(async () => {
   app.listen(PORT, () => console.log(`Server running…`));
 })();
 

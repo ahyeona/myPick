@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Loading, MovieList } from '../components';
+import { Loading, MypickList } from '../components';
 import { getMypickApi } from '../services/mypickApi';
 
 const Mypick = () => {
@@ -22,7 +22,7 @@ const Mypick = () => {
       {loading && <Loading />}
 
       {!loading && (
-        <MovieList caption="mypicks" movies={mypicks} />
+        <MypickList mypicks={mypicks} />
       )}
     </>
   )

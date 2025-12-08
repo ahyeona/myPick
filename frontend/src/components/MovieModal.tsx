@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import type { MovieType, MypickType } from "../types";
-import { addMypickApi, deleteMypickApi, getMypicDetailkApi, updateMypickApi } from "../services/mypickApi";
+import { addMypickApi, deleteMypickApi, getMypickDetailkApi, updateMypickApi } from "../services/mypickApi";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import AuthRoute from "../router/AuthRoute";
@@ -54,27 +54,44 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
   if (!movie) return null;
 
   const addMypick = async () => {
-    const { data } = await addMypickApi({ movie, is_watched: isWatched, memo });
-    console.log(data);
-
-    // onClose();
+    try {
+      const { data } = await addMypickApi({ movie, is_watched: isWatched, memo });
+      console.log(data);
+      alert("추가되었습니다.");
+      onClose();
+    } catch (error) {
+      console.log(error);
+      alert("");
+    }
   }
 
   const updateMypick = async () => {
     if (!mypickDetail?.mypick.id) return;
-    const { data } = await updateMypickApi({ mypick_id: mypickDetail.mypick.id, is_watched: isWatched, memo });
-    console.log(data);
-    // onClose();
+    try {
+      const { data } = await updateMypickApi({ mypick_id: mypickDetail.mypick.id, is_watched: isWatched, memo });
+      console.log(data);
+      alert("수정되었습니다.");
+      onClose();
+    } catch (error) {
+      console.log(error);
+      alert("");
+    }
   }
 
   const deleteMypick = async () => {
     if (!mypickDetail?.mypick.id) return;
-    const props = {
-      mypick_id: mypickDetail.mypick.id
+    try {
+      const props = {
+        mypick_id: mypickDetail.mypick.id
+      }
+      const { data } = await deleteMypickApi(props);
+      console.log(data?.data);
+      alert("삭제되었습니다.");
+      onClose();
+    } catch (error) {
+      console.log(error);
+      alert("");
     }
-    const { data } = await deleteMypickApi(props);
-    console.log(data?.data);
-    // onClose();
   }
 
   const getMypickDetail = async () => {
@@ -83,10 +100,14 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
       movie_id: movie.id
     }
     setLoading(true);
-    const { data } = await getMypicDetailkApi(props);
+    const { data } = await getMypickDetailkApi(props);
     setLoading(false);
     console.log(data?.data);
-    if (data?.data) setMypickDetail(data?.data);
+    if (data?.data) {
+      setMypickDetail(data?.data);
+      setIsWatched(data?.data.mypick.is_watched);
+      setMemo(data?.data.mypick.memo);
+    };
   }
 
   useEffect(() => {

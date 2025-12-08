@@ -1,7 +1,6 @@
-import { useState, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import styled from 'styled-components'
 import Logo from './Logo'
-import SearchBar from './SearchBar'
 import ThemeToggle from './ThemeToggle'
 import Button from './Button'
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +15,7 @@ const NavStyle = styled.div`
   background-color: ${({ theme }) => theme.navBg};
 `
 
-const Nav = ({ children }: { children?: ReactNode }) => {
+const Nav = () => {
   const nav = useNavigate();
   const { user, clearAuth } = useAuthStore.getState();
 
@@ -31,7 +30,6 @@ const Nav = ({ children }: { children?: ReactNode }) => {
       }
       <Button text='mypick' width='100px' onClick={() => { nav("/mypick") }} />
 
-      {/* {children} */}
     </NavStyle>
   )
 }

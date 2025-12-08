@@ -18,19 +18,8 @@ export type GenreType = {
 }
 
 export type MypickType = {
-    movie?: {
-        id?: number;
-        title?: string;
-        poster_path?: string;
-        overview?: string;
-        release_date?: string;
-        genre_ids?: number[];
-
-        adult?: boolean;
-        original_language?: string;
-        original_title?: string;
-    }
     id?: number;
     is_watched?: boolean;
     memo?: string;
+    movie: MovieType;
 }

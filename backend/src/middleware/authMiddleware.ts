@@ -18,11 +18,11 @@ export const authMiddleware = (req: RequestWithUser, res: Response, next: NextFu
             console.log("authmiddleware", decoded.id);
             next();
         } catch (error) {
-            return res.status(403).json({ message: "Access Token이 만료되었습니다." });
+            return res.status(403).json({ message: "로그인 정보가 만료되었습니다. 새로고침하십시오." });
         }
 
     } catch (error) {
-        return res.status(403).json({ message: "Access Token이 만료되었습니다." });
+        return res.status(403).json({ message: "로그인 정보가 만료되었습니다. 새로고침하십시오." });
     }
 
 }

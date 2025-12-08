@@ -3,6 +3,8 @@ import type { MovieType } from '../types'
 import { Movie, MovieContainer } from './Movie'
 import { useEffect, useState } from 'react'
 import MovieModal from './MovieModal'
+import { useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../store/authStore'
 
 const MovieListContainer = styled.div`
     border: 1px solid blue;
@@ -27,6 +29,16 @@ const CaptionStyle = styled.p`
 const MovieList = ({ movies, caption }: { movies: MovieType[], caption: string }) => {
     const [selectedMovie, setSelectedMovie] = useState<MovieType | null>(null);
 
+    const user = useAuthStore.getState().user;
+    const nav = useNavigate();
+
+    const movieClick = (movie: MovieType) => {
+        if (!user) {
+            nav("/login");
+        }
+        setSelectedMovie(movie);
+    }
+
     useEffect(() => {
         console.log(movies)
     }, []);
@@ -37,7 +49,7 @@ const MovieList = ({ movies, caption }: { movies: MovieType[], caption: string }
                 <CaptionStyle>{caption}</CaptionStyle>
                 <div style={{ "display": 'flex' }}>
                     {movies.map((movie: MovieType) => {
-                        return <Movie movie={movie} onClick={() => setSelectedMovie(movie)} />
+                        return <Movie movie={movie} onClick={(movie) => { movieClick(movie) }} />
                     })}
                 </div>
             </MovieListContainer>

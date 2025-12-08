@@ -23,6 +23,10 @@ baseAxios.interceptors.response.use((res) => res, async (error) => {
   if (error.response?.status === 401) {
     alert("로그인이 필요합니다.");
   }
+
+  if (error.response.data.message) {
+    alert(error.response.data.message);
+  }
 });
 
 
