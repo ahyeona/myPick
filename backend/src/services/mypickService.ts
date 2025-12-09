@@ -70,8 +70,8 @@ export const mypickUpdateService = async (dto: UpdateMypickDTO) => {
 
     const updateData: Partial<Mypick> = {};
 
-    if (is_watched !== undefined) updateData.is_watched = is_watched;
-    if (memo !== undefined) updateData.memo = memo;
+    if (is_watched !== null) updateData.is_watched = is_watched;
+    if (memo !== null) updateData.memo = memo;
 
     const result = await Mypick.update(updateData, { where: { id: mypick_id } });
 

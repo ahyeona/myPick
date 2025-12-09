@@ -35,8 +35,22 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
 
   const updateMypick = async () => {
     if (!mypickDetail?.mypick.id) return;
+    let updateDto: {
+      isWatched: boolean | null;
+      memo: string | null;
+    } = {
+      isWatched: null,
+      memo: null
+    }
+    if (mypickDetail.mypick.is_watched !== isWatched) {
+      updateDto.isWatched = isWatched;
+    }
+    if (mypickDetail.mypick.memo !== memo) {
+      updateDto.memo = memo;
+    }
+
     try {
-      const { data } = await updateMypickApi({ mypick_id: mypickDetail.mypick.id, is_watched: isWatched, memo });
+      const { data } = await updateMypickApi({ mypick_id: mypickDetail.mypick.id, is_watched: updateDto.isWatched, memo: updateDto.memo });
       console.log(data);
       alert("수정되었습니다.");
       onClose();

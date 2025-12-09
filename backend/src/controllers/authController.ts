@@ -6,9 +6,9 @@ export const signupController = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const user = await signupService(email, password);
-        res.status(200).json({ message: "회원가입 성공", user });
+        return res.status(200).json({ message: "회원가입 성공", user });
     } catch (error: any) {
-        res.status(400).json({ message: error.message });
+        return res.status(400).json({ message: error.message });
     }
 }
 
@@ -22,9 +22,9 @@ export const loginController = async (req: Request, res: Response) => {
             sameSite: "strict",
             path: "/",
         });
-        res.status(200).json({ message: "로그인 성공", user: data.user, accessToken: data.accessToken });
+        return res.status(200).json({ message: "로그인 성공", user: data.user, accessToken: data.accessToken });
     } catch (error: any) {
-        res.status(400).json({ message: error.message });
+        return res.status(400).json({ message: error.message });
     }
 }
 
@@ -34,9 +34,10 @@ export const refreshController = async (req: Request, res: Response) => {
         const { refreshToken } = req.cookies;
         console.log("refreshToken", refreshToken);
         const accessToken = await refreshAccessToken(refreshToken);
-        res.status(200).json({ message: "accessToken 발급", accessToken });
+
+        return res.status(200).json({ message: "accessToken 발급", accessToken });
     } catch (error: any) {
-        res.status(400).json({ message: "로그인하세요." })
+        return res.status(400).json({ message: "로그인하세요." })
     }
 }
 
