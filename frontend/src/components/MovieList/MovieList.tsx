@@ -1,30 +1,11 @@
-import styled from 'styled-components'
-import type { MovieType } from '../types'
-import { Movie, MovieContainer } from './Movie'
+import type { MovieType } from '../../types'
 import { useEffect, useState } from 'react'
-import MovieModal from './MovieModal'
+import MovieModal from '../MovieModal/MovieModal'
 import { useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/authStore'
+import { useAuthStore } from '../../store/authStore'
+import { CaptionStyle, MovieListContainer } from './MovieList.style'
+import { Movie } from '../Movie/Movie'
 
-const MovieListContainer = styled.div`
-    border: 1px solid blue;
-    width: 100vw;
-    overflow: scroll;
-
-    /* &>div {
-        
-    } */
-
-    & ${MovieContainer} {
-        background-color: aliceblue;
-        margin-inline: 20px;
-    }
-`
-const CaptionStyle = styled.p`
-    font-size: 16px;
-    font-weight: bold;
-    text-align: left;
-`
 
 const MovieList = ({ movies, caption }: { movies: MovieType[], caption: string }) => {
     const [selectedMovie, setSelectedMovie] = useState<MovieType | null>(null);

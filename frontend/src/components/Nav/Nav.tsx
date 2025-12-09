@@ -1,19 +1,9 @@
-import { type ReactNode } from 'react'
-import styled from 'styled-components'
-import Logo from './Logo'
-import ThemeToggle from './ThemeToggle'
-import Button from './Button'
 import { useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/authStore'
-
-const NavStyle = styled.div`
-  width: 100vw;
-  height: 3rem;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: ${({ theme }) => theme.navBg};
-`
+import { NavStyle } from './Nav.style'
+import { useAuthStore } from '../../store/authStore';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import Logo from '../Logo/Logo';
+import Button from '../Button/Button';
 
 const Nav = () => {
   const nav = useNavigate();

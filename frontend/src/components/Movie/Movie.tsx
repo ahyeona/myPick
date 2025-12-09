@@ -1,11 +1,5 @@
-import styled from 'styled-components'
-import type { MovieType } from '../types'
-
-export const MovieContainer = styled.div`
-    border: 1px solid blue;
-    width: fit-content;
-    cursor: pointer;
-`
+import type { MovieType } from '../../types'
+import { MovieContainer } from './Movie.style'
 
 export const Movie = ({ movie, onClick }: { movie: MovieType, onClick: (movie: MovieType) => void }) => {
   return (

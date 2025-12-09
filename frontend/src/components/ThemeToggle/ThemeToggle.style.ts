@@ -1,14 +1,13 @@
-import { useTheme } from "../context/ThemeContext"
 import styled from 'styled-components'
 
-const ToggleContainer = styled.label`
+export const ToggleContainer = styled.label`
   position: relative;
   display: inline-block;
   width: 47.7px;
   height: 23.33px;
 `;
 
-const ToggleSlider = styled.span`
+export const ToggleSlider = styled.span`
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -34,7 +33,7 @@ const ToggleSlider = styled.span`
   }
 `;
 
-const CheckBox = styled.input`
+export const CheckBox = styled.input`
   opacity: 0;
   width: 0;
   height: 0;
@@ -53,22 +52,3 @@ const CheckBox = styled.input`
     transform: translateX(26px);
   }
 `;
-
-
-const ThemeToggle = () => {
-  const { themeName, toggleTheme } = useTheme();
-
-  return (
-    <ToggleContainer>
-      <CheckBox
-        type="checkbox"
-        checked={themeName === "dark" || false}
-        onChange={toggleTheme}
-      />
-      <ToggleSlider />
-    </ToggleContainer>
-  )
-}
-
-
-export default ThemeToggle

@@ -1,41 +1,9 @@
-import styled from "styled-components";
-import type { MovieType, MypickType } from "../types";
-import { addMypickApi, deleteMypickApi, getMypickDetailkApi, updateMypickApi } from "../services/mypickApi";
+import type { MovieType, MypickType } from "../../types";
+import { addMypickApi, deleteMypickApi, getMypickDetailkApi, updateMypickApi } from "../../services/mypickApi";
 import { useEffect, useState } from "react";
-import Loading from "./Loading";
-import AuthRoute from "../router/AuthRoute";
-
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #00000080;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const ModalContainer = styled.div`
-  background-color: #ffffff;
-  width: 50vw;
-  height: fit-content;
-  border-radius: 20px;
-  position: absolute;
-  z-index: 100;
-
-  & img {
-    width: 200px;
-    
-  }
-`
-const CloseBtn = styled.div`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  cursor: pointer;
-`
+import Loading from "../Loading/Loading";
+import AuthRoute from "../../router/AuthRoute";
+import { CloseBtn, ModalContainer, Overlay } from "./MovieModal.style";
 
 type MovieModalProps = {
   movie: MovieType,

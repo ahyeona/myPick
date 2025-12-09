@@ -1,16 +1,4 @@
-import styled from 'styled-components'
-
-const ButtonStyle = styled.div`
-  background-color: ${({ theme }) => theme.buttonBg};
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${({ theme }) => theme.buttonText};
-  &:hover {
-    cursor: pointer;
-  }
-`
+import { ButtonStyle } from "./Button.style";
 
 type ButtonProps = {
   text?: string;

@@ -1,32 +1,10 @@
-import styled from "styled-components"
-import type { MovieType, MypickType } from "../types"
-import MovieModal from "./MovieModal"
+import type { MovieType, MypickType } from "../../types"
+import MovieModal from "../MovieModal/MovieModal"
 import { useEffect, useState } from "react"
-import { useAuthStore } from "../store/authStore"
+import { useAuthStore } from "../../store/authStore"
 import { useNavigate } from "react-router-dom"
-import { Movie } from "./Movie"
-
-const MypickListContainer = styled.div`
-    border: 1px solid blue;
-    width: 100vw;
-    overflow: scroll;
-
-    /* &>div {
-        
-    } */
-
-    & div {
-        background-color: aliceblue;
-        margin-inline: 20px;
-    }
-`
-const CaptionStyle = styled.p`
-    font-size: 16px;
-    font-weight: bold;
-    text-align: left;
-`
-
-
+import { Movie } from "../Movie/Movie"
+import { CaptionStyle, MypickListContainer } from "./MypickList.style"
 
 const MypickList = ({ mypicks }: { mypicks: MypickType[] }) => {
     const [selectedMovie, setSelectedMovie] = useState<MovieType | null>(null);
