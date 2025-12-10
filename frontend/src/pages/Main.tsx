@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { Button, GenreList, Loading, MovieList, SearchBar } from '../components'
 import { genreApi, genreMovieApi, keywordApi, popularApi } from '../services/mainApi'
 import type { MovieType, GenreType } from '../types'
-import { MovieListDummy } from '../dummy/MovieList'
-import { GenreListDummy } from '../dummy/GenreList'
-import { loginApi } from '../services/authApi'
+// import { MovieListDummy } from '../dummy/MovieList'
+// import { GenreListDummy } from '../dummy/GenreList'
+// import { loginApi } from '../services/authApi'
 
 const Main = () => {
   const [keyword, setKeyword] = useState("");
