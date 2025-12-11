@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Loading, MypickList } from '../../components';
 import { getMypickApi } from '../../services/mypickApi';
+import { MypickContainer } from './Mypick.style';
 
 const Mypick = () => {
   const [mypicks, setMypicks] = useState([]);
@@ -18,13 +19,13 @@ const Mypick = () => {
   }, [])
 
   return (
-    <>
+    <MypickContainer>
       {loading && <Loading />}
 
       {!loading && (
         <MypickList mypicks={mypicks} />
       )}
-    </>
+    </MypickContainer>
   )
 }
 

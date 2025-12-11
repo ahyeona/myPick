@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/authStore"
 
 
 const AuthRoute = ({ children }: { children: JSX.Element }) => {
-    const user = useAuthStore.getState().user;
+    const { user } = useAuthStore();
 
     return (
         user ? children : <Login />

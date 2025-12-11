@@ -4,11 +4,10 @@ import { useEffect, useState } from "react"
 import { useAuthStore } from "../../store/authStore"
 import { useNavigate } from "react-router-dom"
 import { Movie } from "../Movie/Movie"
-import { CaptionStyle, MypickListContainer } from "./MypickList.style"
+import { CaptionStyle, MypickListContainer, MypickMovieRow } from "./MypickList.style"
 
 const MypickList = ({ mypicks }: { mypicks: MypickType[] }) => {
     const [selectedMovie, setSelectedMovie] = useState<MovieType | null>(null);
-    // const [selectedMypick, setSelectedMypick] = useState<MypickType | null>(null);
 
     const user = useAuthStore.getState().user;
     const nav = useNavigate();
@@ -27,21 +26,33 @@ const MypickList = ({ mypicks }: { mypicks: MypickType[] }) => {
     return (
         <>
             <MypickListContainer>
-                <CaptionStyle>{"본 mypick 목록"}</CaptionStyle>
-                {mypicks.map((mypick: MypickType) => {
-                    const { movie } = mypick;
-                    if (!mypick.is_watched) { return }
-                    return <Movie movie={movie} onClick={(movie) => { movieClick(movie) }} />
-                })}
+                <CaptionStyle>본 mypick 목록</CaptionStyle>
+                <MypickMovieRow>
+                    {mypicks
+                        .filter(m => m.is_watched)
+                        .map(mypick => (
+                            <Movie
+                                key={mypick.id}
+                                movie={mypick.movie}
+                                onClick={() => movieClick(mypick.movie)}
+                            />
+                        ))}
+                </MypickMovieRow>
             </MypickListContainer>
 
             <MypickListContainer>
-                <CaptionStyle>{"볼 mypick 목록"}</CaptionStyle>
-                {mypicks.map((mypick: MypickType) => {
-                    if (mypick.is_watched) { return }
-                    const { movie } = mypick;
-                    return <Movie movie={movie} onClick={(movie) => { movieClick(movie) }} />
-                })}
+                <CaptionStyle>볼 mypick 목록</CaptionStyle>
+                <MypickMovieRow>
+                    {mypicks
+                        .filter(m => !m.is_watched)
+                        .map(mypick => (
+                            <Movie
+                                key={mypick.id}
+                                movie={mypick.movie}
+                                onClick={() => movieClick(mypick.movie)}
+                            />
+                        ))}
+                </MypickMovieRow>
             </MypickListContainer>
 
             {
