@@ -2,12 +2,14 @@ import styled from "styled-components";
 
 export const AuthFormContainer = styled.div`
   width: 400px;
-  margin: 80px auto;
+  height: fit-content;
+  margin: 100px auto;
   padding: 40px;
   border: 1px solid #ddd;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 
 `

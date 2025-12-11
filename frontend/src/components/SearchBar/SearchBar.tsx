@@ -17,7 +17,7 @@ const SearchBar = ({ onChange, placeholder, search }: SearchBarProps) => {
         onKeyDown={(e) => {
           if (e.code === 'Enter') search();
         }}
-        placeholder={placeholder || '검색어를 입력하세요!!!'} />
+        placeholder={placeholder || '검색어를 입력하세요.'} />
       <Button width='fit-content' text='검색' onClick={search} />
     </SearchWrapper>
   )

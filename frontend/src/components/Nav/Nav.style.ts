@@ -7,4 +7,8 @@ export const NavStyle = styled.div`
   justify-content: space-around;
   align-items: center;
   background-color: ${({ theme }) => theme.navBg};
+
+  & p {
+    color: ${({ theme }) => theme.buttonText};
+  }
 `
