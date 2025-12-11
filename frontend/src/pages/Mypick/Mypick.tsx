@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Loading, MypickList } from '../components';
-import { getMypickApi } from '../services/mypickApi';
+import { Loading, MypickList } from '../../components';
+import { getMypickApi } from '../../services/mypickApi';
 
 const Mypick = () => {
   const [mypicks, setMypicks] = useState([]);

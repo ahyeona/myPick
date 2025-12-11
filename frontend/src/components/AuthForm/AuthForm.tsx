@@ -56,7 +56,7 @@ const AuthForm = ({ mode, onSubmit }: AuthFormProps) => {
     }
 
     const onClick = () => {
-        if (!validate()) return;
+        if (mode === "signup" && !validate()) return;
 
         onSubmit({ email, password });
     }

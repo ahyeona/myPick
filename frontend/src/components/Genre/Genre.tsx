@@ -4,12 +4,12 @@ import { GenreContainer } from "./Genre.style";
 
 type GenreProps = {
   genre: GenreType;
-  setGenre: Dispatch<SetStateAction<GenreType>>;
+  setGenre: Dispatch<SetStateAction<GenreType>> | null;
 }
 
 const Genre = ({ genre, setGenre }: GenreProps) => {
   return (
-    <GenreContainer onClick={() => { setGenre(genre) }}>
+    <GenreContainer onClick={() => { if (setGenre) setGenre(genre) }}>
       {genre.name}
     </GenreContainer>
   )

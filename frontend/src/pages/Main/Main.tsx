@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Button, GenreList, Loading, MovieList, SearchBar } from '../components'
-import { genreApi, genreMovieApi, keywordApi, popularApi } from '../services/mainApi'
-import type { MovieType, GenreType } from '../types'
-// import { MovieListDummy } from '../dummy/MovieList'
-// import { GenreListDummy } from '../dummy/GenreList'
-// import { loginApi } from '../services/authApi'
+import { Button, GenreList, Loading, MovieList, SearchBar } from '../../components'
+import { genreApi, genreMovieApi, keywordApi, popularApi } from '../../services/mainApi'
+import type { MovieType, GenreType } from '../../types'
+import { MainContainer } from './Main.style'
 
 const Main = () => {
   const [keyword, setKeyword] = useState("");
@@ -32,8 +30,6 @@ const Main = () => {
       setPopularMovies([...popularMovies, ...data.data]);
     }
 
-    console.log("sdfsdfs", data.data.length);
-
     if (data.data.length === 0) {
       setHasMore(false);
     } else {
@@ -45,7 +41,10 @@ const Main = () => {
   };
 
   const getKeywordMovies = async (pageNo: number) => {
-    if (!keyword.trim()) return;
+    if (!keyword.trim()) {
+      alert("검색어를 입력하세요.");
+      return;
+    }
     setLoading(true);
     const { data } = await keywordApi(keyword, pageNo);
 
@@ -99,6 +98,7 @@ const Main = () => {
       setPopularPage(pageNo);
       setGenrePage(1);
       setKeywordPage(1);
+      setKeyword("");
     }
     if (mode === "keyword") {
       getKeywordMovies(pageNo);
@@ -111,6 +111,7 @@ const Main = () => {
       setGenrePage(pageNo);
       setPopularPage(1);
       setKeywordPage(1);
+      setKeyword("");
     }
   }
 
@@ -127,23 +128,28 @@ const Main = () => {
   }, [genre]);
 
   return (
-    <>
+    <MainContainer>
       <SearchBar onChange={setKeyword} search={() => { getKeywordMovies(1) }} />
       <GenreList genres={genreList} setGenre={setGenre} />
 
+      <MovieList
+        caption={
+          mode === "popular"
+            ? "인기 영화 목록"
+            : mode === "keyword"
+              ? `${keyword} 검색 결과`
+              : `${genre.name} 영화 목록`
+        }
+        movies={
+          mode === "popular"
+            ? popularMovies
+            : mode === "keyword"
+              ? keywordMovies
+              : genreMovies
+        }
+      />
+
       {loading && <Loading />}
-
-      {!loading && mode === "popular" && (
-        <MovieList caption="인기 영화 목록" movies={popularMovies} />
-      )}
-
-      {!loading && mode === "keyword" && (
-        <MovieList caption={`${keyword} 검색 결과`} movies={keywordMovies} />
-      )}
-
-      {!loading && mode === "genre" && (
-        <MovieList caption={`${genre.name} 영화 목록`} movies={genreMovies} />
-      )}
 
       {!loading && hasMore && (
         <Button onClick={loadMore} text='더보기' />
@@ -152,7 +158,7 @@ const Main = () => {
       {!loading && !hasMore && (
         <p>목록의 끝입니다.</p>
       )}
-    </>
+    </MainContainer>
   )
 }
 

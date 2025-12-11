@@ -3,7 +3,8 @@ import { addMypickApi, deleteMypickApi, getMypickDetailkApi, updateMypickApi } f
 import { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
 import AuthRoute from "../../router/AuthRoute";
-import { CloseBtn, ModalContainer, Overlay } from "./MovieModal.style";
+import { ButtonFlexDiv, CloseBtn, GenreName, ModalContainer, MovieDetail, MypickDetail, Overlay, Overview, Title } from "./MovieModal.style";
+import Button from "../Button/Button";
 
 type MovieModalProps = {
   movie: MovieType,
@@ -35,6 +36,7 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
 
   const updateMypick = async () => {
     if (!mypickDetail?.mypick.id) return;
+    if (!confirm("수정하시겠습니까?")) return;
     let updateDto: {
       isWatched: boolean | null;
       memo: string | null;
@@ -62,6 +64,8 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
 
   const deleteMypick = async () => {
     if (!mypickDetail?.mypick.id) return;
+    if (!confirm("삭제하시겠습니까?")) return;
+
     try {
       const props = {
         mypick_id: mypickDetail.mypick.id
@@ -93,6 +97,7 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
   }
 
   useEffect(() => {
+    console.log("movie", movie);
     getMypickDetail();
   }, []);
 
@@ -104,32 +109,40 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
             {loading && <Loading />}
 
             <CloseBtn onClick={onClose}>X</CloseBtn>
-            {movie.title}
-            <img src={movie.imgUrl} />
-            <div>{movie.genres?.map((genre) => { return <span>{genre}</span> })}</div>
-            <p>{movie.overview}</p>
-            <span>{movie.release_date}</span>
+            <div style={{ display: "flex" }}>
+              <div style={{ marginRight: "10px", display: "flex", alignItems: "center" }}>
+                <img src={movie.imgUrl} />
+              </div>
+              <MovieDetail>
+                <Title>{movie.title}</Title>
+                <div>{movie.genres?.map((genre) => { return <GenreName>{genre}</GenreName> })}</div>
+                <span>개봉일 : {movie.release_date}</span>
+                <Overview>{movie.overview}</Overview>
 
-            {
-              mypickDetail?.isMypick ?
-                <>
-                  <label><input type="checkbox" defaultChecked={mypickDetail.mypick.is_watched} onChange={(e) => { setIsWatched(e.target.checked) }} />시청여부</label>
-                  <textarea onChange={(e) => { setMemo(e.target.value) }}>{mypickDetail.mypick.memo}</textarea>
-                  <div onClick={updateMypick}>수정</div>
-                  <div onClick={deleteMypick}>삭제</div>
-                </>
-                :
-                <div onClick={() => { setAddMode(true) }}>mypick 추가</div>
-            }
-            {
-              addMode && (
-                <>
-                  <label><input type="checkbox" onChange={(e) => { setIsWatched(e.target.checked) }} />시청여부</label>
-                  <textarea placeholder="메모" onChange={(e) => { setMemo(e.target.value) }}></textarea>
-                  <div onClick={addMypick}>저장</div>
-                </>
-              )
-            }
+                {
+                  mypickDetail?.isMypick ?
+                    <MypickDetail>
+                      <label><input type="checkbox" defaultChecked={mypickDetail.mypick.is_watched} onChange={(e) => { setIsWatched(e.target.checked) }} />나의 시청여부</label>
+                      <textarea onChange={(e) => { setMemo(e.target.value) }}>{mypickDetail.mypick.memo}</textarea>
+                      <ButtonFlexDiv>
+                        <Button text="수정" onClick={updateMypick} width="100px" background="blue" />
+                        <Button text="삭제" onClick={deleteMypick} width="100px" background="red" />
+                      </ButtonFlexDiv>
+                    </MypickDetail>
+                    :
+                    <Button text="mypick 추가" onClick={() => { setAddMode(!addMode) }} background="black" width="100px" />
+                }
+                {
+                  addMode && (
+                    <MypickDetail>
+                      <label><input type="checkbox" onChange={(e) => { setIsWatched(e.target.checked) }} />나의 시청여부</label>
+                      <textarea placeholder="메모" onChange={(e) => { setMemo(e.target.value) }}></textarea>
+                      <Button text="저장" onClick={addMypick} width="100px" background="blue" />
+                    </MypickDetail>
+                  )
+                }
+              </MovieDetail>
+            </div>
           </>
         </AuthRoute>
       </ModalContainer>

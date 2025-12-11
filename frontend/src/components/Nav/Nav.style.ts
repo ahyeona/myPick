@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const NavStyle = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 3rem;
   display: flex;
   justify-content: space-around;

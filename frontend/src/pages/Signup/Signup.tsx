@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { AuthForm } from '../components';
-import { signupApi, type AuthProps } from '../services/authApi';
+import { AuthForm } from '../../components';
+import { signupApi, type AuthProps } from '../../services/authApi';
 
 const Signup = () => {
   const nav = useNavigate();

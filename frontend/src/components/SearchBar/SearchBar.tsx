@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react';
-import { SearchBarStyle } from './SearchBar.style';
+import { SearchBarStyle, SearchWrapper } from './SearchBar.style';
+import Button from '../Button/Button';
 
 
 type SearchBarProps = {
@@ -10,12 +11,15 @@ type SearchBarProps = {
 
 const SearchBar = ({ onChange, placeholder, search }: SearchBarProps) => {
   return (
-    <SearchBarStyle
-      onChange={(e) => onChange(e.target.value)}
-      onKeyDown={(e) => {
-        if (e.code === 'Enter') search();
-      }}
-      placeholder={placeholder || '검색어를 입력하세요!!!'} />
+    <SearchWrapper>
+      <SearchBarStyle
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.code === 'Enter') search();
+        }}
+        placeholder={placeholder || '검색어를 입력하세요!!!'} />
+      <Button width='fit-content' text='검색' onClick={search} />
+    </SearchWrapper>
   )
 }
 

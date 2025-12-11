@@ -8,16 +8,35 @@ export const lightTheme: DefaultTheme = {
   buttonBg: "#F5F5F5",
   buttonText: "#000000",
 
-  navBg: "#E0E0E0"
+  navBg: "#E0E0E0",
+
+  border: "#d0d7de",
+  inputBg: "#f9fafb",
+
+  placeholder: "#9ca3af",
+  inputFocusBg: "#fff",
+
+  primary: "#3b82f6",
+  primaryShadow: "rgba(59, 130, 246, 0.3)"
+
 };
 
 export const darkTheme: DefaultTheme = {
-  bg: "#F5F5F5",
-  textPrimary: "#F2F2F2",
-  text: "#B3B3B3",
+  bg: "#0D1117",
+  textPrimary: "#E6E6E6",
+  text: "#A0A0A0",
 
-  buttonBg: "#1A1A1A",
-  buttonText: "#ffffff",
+  buttonBg: "#1F242B",
+  buttonText: "#FFFFFF",
 
-  navBg: "#333333"
-};
+  navBg: "#161B22",
+
+  border: "#30363D",
+  inputBg: "#1A1F24",
+
+  placeholder: "#6B7280",
+  inputFocusBg: "#0D1117",
+
+  primary: "#3b82f6",
+  primaryShadow: "rgba(59, 130, 246, 0.5)"
+}

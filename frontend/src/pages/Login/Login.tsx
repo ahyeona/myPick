@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import { AuthForm } from '../components'
-import { loginApi, type AuthProps } from '../services/authApi';
-import { useAuthStore } from '../store/authStore';
+import { AuthForm } from '../../components'
+import { loginApi, type AuthProps } from '../../services/authApi';
+import { useAuthStore } from '../../store/authStore';
 
 const Login = () => {
   const { setAuth } = useAuthStore();

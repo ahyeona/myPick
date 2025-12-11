@@ -10,5 +10,12 @@ declare module "styled-components" {
     buttonText: string;
 
     navBg: string;
+
+    border: string;
+    placeholder: string;
+    inputBg: string;
+    inputFocusBg: string;
+    primary: string;
+    primaryShadow: string;
   }
 }
