@@ -1,12 +1,17 @@
 import type { MovieType, MypickType } from "../../types"
 import MovieModal from "../MovieModal/MovieModal"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useAuthStore } from "../../store/authStore"
 import { useNavigate } from "react-router-dom"
 import { Movie } from "../Movie/Movie"
 import { CaptionStyle, MypickListContainer, MypickMovieRow } from "./MypickList.style"
 
-const MypickList = ({ mypicks }: { mypicks: MypickType[] }) => {
+type MypickListProps = {
+    mypicks: MypickType[]
+    refresh: () => void
+}
+
+const MypickList = ({ mypicks, refresh }: MypickListProps) => {
     const [selectedMovie, setSelectedMovie] = useState<MovieType | null>(null);
 
     const user = useAuthStore.getState().user;
@@ -18,10 +23,6 @@ const MypickList = ({ mypicks }: { mypicks: MypickType[] }) => {
         }
         setSelectedMovie(movie);
     }
-
-    useEffect(() => {
-        console.log(mypicks)
-    }, []);
 
     return (
         <>
@@ -57,7 +58,7 @@ const MypickList = ({ mypicks }: { mypicks: MypickType[] }) => {
 
             {
                 selectedMovie && (
-                    <MovieModal movie={selectedMovie} onClose={() => { setSelectedMovie(null) }} />
+                    <MovieModal refresh={refresh} movie={selectedMovie} onClose={() => { setSelectedMovie(null) }} />
                 )
             }
         </>

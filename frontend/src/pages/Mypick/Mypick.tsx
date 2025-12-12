@@ -23,7 +23,7 @@ const Mypick = () => {
       {loading && <Loading />}
 
       {!loading && (
-        <MypickList mypicks={mypicks} />
+        <MypickList mypicks={mypicks} refresh={getMypicks} />
       )}
     </MypickContainer>
   )

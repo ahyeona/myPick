@@ -19,7 +19,7 @@ export const loginController = async (req: Request, res: Response) => {
         const data = await loginService(email, password);
         res.cookie("refreshToken", data.refreshToken, {
             httpOnly: true,
-            secure: false,    // https 환경에서만 전송
+            secure: true,
             sameSite: "strict",
             path: "/",
         });
@@ -65,7 +65,7 @@ export const logoutController = async (req: RequestWithUser, res: Response) => {
 
         res.clearCookie("refreshToken", {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "strict",
             path: "/",
         });

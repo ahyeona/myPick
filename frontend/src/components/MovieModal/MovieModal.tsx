@@ -8,10 +8,11 @@ import Button from "../Button/Button";
 
 type MovieModalProps = {
   movie: MovieType,
-  onClose: () => void
+  onClose: () => void,
+  refresh?: () => void
 }
 
-const MovieModal = ({ movie, onClose }: MovieModalProps) => {
+const MovieModal = ({ movie, onClose, refresh }: MovieModalProps) => {
   const [loading, setLoading] = useState(false);
 
   const [mypickDetail, setMypickDetail] = useState<{ isMypick: true, mypick: MypickType } | null>(null);
@@ -55,6 +56,7 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
       const { data } = await updateMypickApi({ mypick_id: mypickDetail.mypick.id, is_watched: updateDto.isWatched, memo: updateDto.memo });
       console.log(data);
       alert("수정되었습니다.");
+      if (refresh) refresh();
       onClose();
     } catch (error) {
       console.log(error);
@@ -73,6 +75,7 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
       const { data } = await deleteMypickApi(props);
       console.log(data?.data);
       alert("삭제되었습니다.");
+      if (refresh) refresh();
       onClose();
     } catch (error) {
       console.log(error);
