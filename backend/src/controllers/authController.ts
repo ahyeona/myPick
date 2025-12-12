@@ -20,8 +20,8 @@ export const loginController = async (req: Request, res: Response) => {
         res.cookie("refreshToken", data.refreshToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "strict",
-            path: "/",
+            sameSite: "none",
+            // path: "/",
         });
         return res.status(200).json({ message: "로그인 성공", user: data.user, accessToken: data.accessToken });
     } catch (error: any) {
@@ -66,8 +66,8 @@ export const logoutController = async (req: RequestWithUser, res: Response) => {
         res.clearCookie("refreshToken", {
             httpOnly: true,
             secure: true,
-            sameSite: "strict",
-            path: "/",
+            sameSite: "none",
+            // path: "/",
         });
 
         return res.status(200).json({ message: "로그아웃 성공" });
